@@ -9,7 +9,7 @@
       并采用另外一种功能点方法或其他的软件规模度量方法对前一种方法的度量结果进行验证。
       本实验为课内设计性实验项目，实验学时 1 学时，完成实验报告 1 学时。
     </p>
-    <h2>二、实验步骤  </h2>
+    <h2>二、实验原理  </h2>
     <p class="secondtitle">第一步：确定计数的视角和目的</p>
     <p class="content">确定功能点计数的视角方便了后续计数边界的确定。下面是三种常用的视角————<br />
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.项目视角：为了确定以软件开发项目形式所要交付功能的规模，计数的目的是要利用功能
@@ -95,7 +95,10 @@
       其中AFPI =调整后的功能点指数，FPI =功能点指数，TCA =技术复杂性调整。
     <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;详见实验指导书，以实验指导书为准。
     </p>
-   <h2>三. 实验参数 </h2>
+   <h2>三. 实验步骤 </h2>
+  <p class="secondtitle">第一步：计算输入数据元素类型Input Types个数，引用的数据实体类型Entity References个数，
+    引用的数据实体类型Entity References个数，填写到表一。（其中FUNCTION CHANGED与FUNCTION DELETED两类的三个个数可填为0。）</p>
+  <br />
   <h2 style="text-align: center;">表1：功能点分析-总体总结和汇总 </h2>
   <a-table :pagination="false" :columns="columns" :data-source="tableData" bordered size="middle" style="word-break: break-all;">
     <template #bodyCell="{ column, record, index }">
@@ -122,10 +125,20 @@
       </template>
     </template>
     <br /><br />
-  </a-table><span style="margin-left:220px" class="secondtitle">本实验未调整功能大小FPI计算表示为 </span>
+  </a-table>
+  <br /><br />
+  <p class="secondtitle">第二步：计算调整前的功能大小FPI</p>
+  <br />
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;根据公式FPI = Wi * ∑Ni + We * ∑Ne + Wo * ∑No
+  可得，本实验未调整功能大小FPI计算表示为
   <span style="font-size:20px">{{SUM}}</span>
   <br>
   <br /><br />
+
+  <p class="secondtitle">第三步：技术复杂性调整，在 0到5的范围内测量19个（或更多）技术特征对应用规模的影响。
+    即要求从数据流，分布式功能，性能等20个技术中挑选19个，并为其复杂度调整特性的影响程度打分，
+    0~5表示影响程度由小到大，填写表二。</p>
+  <br />
   <h2 style="text-align: center;">表2：功能点分析-技术复杂性调整 </h2>
   <a-table :columns="columnsadjust" :pagination="false" :data-source="dataadjust" bordered size="middle" style="word-break: break-all;">
     <template #bodyCell="{ column, record }">
@@ -145,20 +158,34 @@
       </template>
     </template>
   </a-table>
+  <br />
   <br /><br />
-  <span class="secondtitle">总影响度TDI：</span>
+
+  <p class="secondtitle">第四步：计算技术复杂性调整（TCA）， 总影响度（TDI），调整后的功能点指数（AFPI）</p>
+  <br />
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;19个（或更多）特征中的每个特征的得分的总数,即总影响度TDI：
   <span style="font-size:20px">{{TDL}}</span>
 
  <br />
-  <span class="secondtitle">技术复杂性调整TCA为：</span>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TCA =（TDI * C）+0.65，其中当前行业平均值C为0.005。因此，TCA可以在0.65到1.15之间变化
+  。技术复杂性调整TCA为：
   <span style="font-size:20px"> {{TCA}}</span>
 
 
   <br>
-  <span class="secondtitle">调整后的功能点计算AFPI表示为： </span>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AFPI = FPI * TCA，
+      其中AFPI =调整后的功能点指数，FPI =功能点指数，TCA =技术复杂性调整。调整后的功能点计算AFPI表示为：
   <span style="font-size:20px">{{AFPI}}  </span>
 
   <br /><br />
+
+  <p class="secondtitle">第五步：根据生产率计算项目工作量</p>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目工作量 Project Effort = AFPI * Productivity，
+  Productivity生产率默认为 10 人时/功能点。所以项目工作量 Project Effort=
+  <span style="font-size:20px">{{ PE}}  人时</span>
+  <br />
+
   <a-button class="button3" type="primary" shape="round">
     <template #icon>
       <DownloadOutlined />
@@ -553,6 +580,10 @@ export default {
     AFPI(){
 
       return (this.$data.SUM*(this.$data.TDL*0.005+0.65)).toFixed(2)
+    },
+    PE(){
+
+      return (this.$data.SUM*(this.$data.TDL*0.005+0.65)*10).toFixed(2)
     }
 
 
