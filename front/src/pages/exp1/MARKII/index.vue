@@ -185,6 +185,11 @@
   Productivity生产率默认为 10 人时/功能点。所以项目工作量 Project Effort=
   <span style="font-size:20px">{{ PE}}  人时</span>
   <br />
+  <br /><br />
+  <h2>四. 实验心得 </h2>
+  <form action="XXX" method="post" enctype="multipart/form-data">
+    <textarea name="saysth" rows="5" cols="100"></textarea>
+  </form>
 
   <a-button class="button3" type="primary" shape="round">
     <template #icon>
