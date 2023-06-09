@@ -99,7 +99,7 @@
   <p class="secondtitle">第一步：计算输入数据元素类型Input Types个数，引用的数据实体类型Entity References个数，
     引用的数据实体类型Entity References个数，填写到表一。（其中FUNCTION CHANGED与FUNCTION DELETED两类的三个个数可填为0。）</p>
   <br />
-  <h2 style="text-align: center;">表1：功能点分析-总体总结和汇总 </h2>
+  <h4 style="text-align: center;">表1：功能点分析-总体总结和汇总 </h4>
   <a-table :pagination="false" :columns="columns" :data-source="tableData" bordered size="middle" style="word-break: break-all;">
     <template #bodyCell="{ column, record, index }">
       <template v-if="column.dataIndex === 'A'">
@@ -139,7 +139,7 @@
     即要求从数据流，分布式功能，性能等20个技术中挑选19个，并为其复杂度调整特性的影响程度打分，
     0~5表示影响程度由小到大，填写表二。</p>
   <br />
-  <h2 style="text-align: center;">表2：功能点分析-技术复杂性调整 </h2>
+  <h4 style="text-align: center;">表2：功能点分析-技术复杂性调整 </h4>
   <a-table :columns="columnsadjust" :pagination="false" :data-source="dataadjust" bordered size="middle" style="word-break: break-all;">
     <template #bodyCell="{ column, record }">
       <template v-if="column.dataIndex === 'grade'">
@@ -161,36 +161,37 @@
   <br />
   <br /><br />
 
-  <p class="secondtitle">第四步：计算技术复杂性调整（TCA）， 总影响度（TDI），调整后的功能点指数（AFPI）</p>
-  <br />
+  <p class="secondtitle">第四步：计算技术复杂性调整（TCA）</p>
 
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;19个（或更多）特征中的每个特征的得分的总数,即总影响度TDI：
   <span style="font-size:20px">{{TDL}}</span>
-
- <br />
+  <br />
+  <p class="secondtitle">第五步：计算总影响度（TDI）</p>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TCA =（TDI * C）+0.65，其中当前行业平均值C为0.005。因此，TCA可以在0.65到1.15之间变化
   。技术复杂性调整TCA为：
   <span style="font-size:20px"> {{TCA}}</span>
-
-
-  <br>
+  <br />
+  <p class="secondtitle">第六步：计算调整后的功能点指数（AFPI）</p>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AFPI = FPI * TCA，
-      其中AFPI =调整后的功能点指数，FPI =功能点指数，TCA =技术复杂性调整。调整后的功能点计算AFPI表示为：
+      AFPI =调整后的功能点指数，FPI =功能点指数，TCA =技术复杂性调整。调整后的功能点计算AFPI表示为：
   <span style="font-size:20px">{{AFPI}}  </span>
 
   <br /><br />
 
-  <p class="secondtitle">第五步：根据生产率计算项目工作量</p>
+  <p class="secondtitle">第七步：根据生产率计算项目工作量</p>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目工作量 Project Effort = AFPI * Productivity，
   Productivity生产率默认为 10 人时/功能点。所以项目工作量 Project Effort=
   <span style="font-size:20px">{{ PE}}  人时</span>
   <br />
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;则此部分资金成本为<span style="font-size:20px">{{MONEY}}   </span>元，默认每人时的花费为50元.
+
+
+
   <br /><br />
   <h2>四. 实验心得 </h2>
-  <form action="XXX" method="post" enctype="multipart/form-data">
-    <textarea name="saysth" rows="5" cols="100"></textarea>
-  </form>
+<textarea  class="textareac"></textarea>
 
+  <br />
   <a-button class="button3" type="primary" shape="round">
     <template #icon>
       <DownloadOutlined />
@@ -589,6 +590,10 @@ export default {
     PE(){
 
       return (this.$data.SUM*(this.$data.TDL*0.005+0.65)*10).toFixed(2)
+    },
+    MONEY(){
+
+      return (this.$data.SUM*(this.$data.TDL*0.005+0.65)*10*50).toFixed(2)
     }
 
 
@@ -612,6 +617,7 @@ export default {
   font-weight: bold;
   margin-left: 30px;
   margin-right: 30px;
+  font-size: 15px;
 }
 .thirdtitle {
   text-indent: 2em;
@@ -620,6 +626,37 @@ export default {
   margin-right: 30px;
   font-size: 10px;
 }
+.textareac{
+  resize: none;
+  text-align: left;
+  background: #FFFFFF;
+  width:400px;
+  height:100px;
+  text-align:center;
+  SCROLLBAR-FACE-COLOR: #004824;
+  SCROLLBAR-HIGHLIGHT-COLOR: #004824;
+  SCROLLBAR-SHADOW-COLOR: #004824;
+  SCROLLBAR-3DLIGHT-COLOR: #004824;
+  SCROLLBAR-ARROW-COLOR: #00fc00;
+  SCROLLBAR-TRACK-COLOR: #4848fc;
+  SCROLLBAR-DARKSHADOW-COLOR: #004824;
+  SCROLLBAR-BASE-COLOR: #004824
+}
+.textareacc{
+  resize: none;
+  background: #FFFFFF;
+  /*将边框去掉*/
+  border: 0;
+  /*设置宽度高度*/
+  height: 80px;
+  width: 400px;
+  /*设置字体大小*/
+  font-size: 18px;
+  /* placeholder位置 提示靠左靠右居中等 */
+  text-align: left;
+  /* 其他样式还有不少，没有用就没查，需要可自行查看 */
+}
+
 
 .maintable {
   text-align: center;
